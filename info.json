@@ -1,0 +1,9 @@
+{
+	"name": "data-raw-lib",
+	"version": "0.0.1",
+	"title": "Data Raw Library",
+	"author": "exfret",
+	"factorio_version": "2.0",
+	"description": "Library for handling data.raw. Made first for exfret's Randomizer, now ported for general use by modders.",
+	"dependencies": []
+}
