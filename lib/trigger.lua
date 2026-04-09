@@ -1,4 +1,4 @@
--- TODO: In DepGraphLib, make sure to add a new node type for triggers
+-- TODO: In DepGraphLib, make sure to add a new node type for base triggers that are conditional
 
 local traversal = require("lib.traversal")
 
@@ -95,7 +95,9 @@ trigger.create_filters = function(structs)
     local creates_entity = {}
     local creates_item = {}
     local creates_tile = {}
+    -- Only considers positive damage
     local damage = {}
+    local health_change = {}
 
     for address, struct in pairs(structs) do
         local tbl = struct.tbl
@@ -134,10 +136,16 @@ trigger.create_filters = function(structs)
             -- We can't test for just damage as a key since we don't really care about damage done to tiles
             -- In the future, we could also test filters to make sure the damage can be done to a specific entity, but it's not that important
             if tbl.type == "damage" then
-                damage[address] = {
+                health_change[address] = {
                     struct = struct,
-                    damage = struct.damage,
+                    change = struct.damage,
                 }
+                if tbl.damage.amount > 0 then
+                    damage[address] = {
+                        struct = struct,
+                        damage = tbl.damage,
+                    }
+                end
             end
             local create_entity_types = {
                 ["create-entity"] = true,
@@ -206,6 +214,7 @@ trigger.create_filters = function(structs)
         creates_item = creates_item,
         creates_tile = creates_tile,
         damage = damage,
+        health_change = health_change,
     }
 end
 

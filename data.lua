@@ -2,6 +2,7 @@ DataRawLib = {}
 
 DataRawLib.categories = require("lib.categories")
 DataRawLib.duplicate = require("lib.duplicate")
+DataRawLib.extract = require("lib.extract")
 DataRawLib.key = require("lib.key")
 DataRawLib.locale = require("lib.locale")
 DataRawLib.patching = require("lib.patching")
