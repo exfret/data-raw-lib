@@ -10,7 +10,7 @@ local extract = {}
 
 -- Gets ammo categories that a prototype can use
 -- Format:
---   ammo_category_name --> true or nil
+--   ammo_category_name --> true | nil
 -- Assumes a prototype that can support ammo in the first place is passed
 extract.ammo_categories = function(prototype)
     -- AttackParameters is the only place accepted ammo categories can be defined
@@ -26,6 +26,25 @@ extract.ammo_categories = function(prototype)
     end
 
     return cats
+end
+
+-- Gets the action of the attack_parameters for this prototype, where the damage is stored, if there is any
+extract.attack_action = function(tbl, flags)
+    flags = flags or {}
+
+    local key_to_check = "attack_parameters"
+    if flags.revenge then
+        key_to_check = "revenge_attack_parameters"
+    end
+    local attack_parameters = tbl[key_to_check]
+    if attack_parameters == nil then
+        return nil
+    end
+    local ammo_type = attack_parameters.ammo_type
+    if ammo_type == nil then
+        return nil
+    end
+    return ammo_type.action
 end
 
 return extract
