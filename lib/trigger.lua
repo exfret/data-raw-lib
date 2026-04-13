@@ -8,6 +8,9 @@ local listify = traversal.listify
 local trigger = {}
 
 trigger.flatten_structs_effect = function(tbl, structs, address)
+    structs = structs or {}
+    address = address or ""
+
     if tbl.type == nil then
         structs[address] = {
             type = "TriggerEffectList",
@@ -18,7 +21,7 @@ trigger.flatten_structs_effect = function(tbl, structs, address)
         for ind, elt in pairs(listify(tbl)) do
             trigger.flatten_structs_effect(elt, structs, address .. "/" .. tostring(ind))
         end
-        return
+        return structs
     end
 
     structs[address] = {
@@ -35,9 +38,14 @@ trigger.flatten_structs_effect = function(tbl, structs, address)
     end
     -- For nested-result
     trigger.flatten_structs_item(tablize(tbl.action), structs, address .. "/action")
+
+    return structs
 end
 
 trigger.flatten_structs_delivery = function(tbl, structs, address)
+    structs = structs or {}
+    address = address or ""
+
     if tbl.type == nil then
         structs[address] = {
             type = "TriggerDeliveryList",
@@ -48,7 +56,7 @@ trigger.flatten_structs_delivery = function(tbl, structs, address)
         for ind, elt in pairs(listify(tbl)) do
             trigger.flatten_structs_delivery(elt, structs, address .. "/" .. tostring(ind))
         end
-        return
+        return structs
     end
 
     structs[address] = {
@@ -59,9 +67,14 @@ trigger.flatten_structs_delivery = function(tbl, structs, address)
 
     trigger.flatten_structs_effect(tablize(tbl.source_effects), structs, address .. "/source_effects")
     trigger.flatten_structs_effect(tablize(tbl.target_effects), structs, address .. "/target_effects")
+
+    return structs
 end
 
 trigger.flatten_structs_item = function(tbl, structs, address)
+    structs = structs or {}
+    address = address or ""
+
     if tbl.type == nil then
         structs[address] = {
             type = "TriggerItemList",
@@ -72,7 +85,7 @@ trigger.flatten_structs_item = function(tbl, structs, address)
         for ind, elt in pairs(listify(tbl)) do
             trigger.flatten_structs_item(elt, structs, address .. "/" .. tostring(ind))
         end
-        return
+        return structs
     end
 
     structs[address] = {
@@ -85,6 +98,8 @@ trigger.flatten_structs_item = function(tbl, structs, address)
 
     -- From LineTriggerItem
     trigger.flatten_structs_effect(tablize(tbl.range_effects), structs, address .. "/range_effects")
+
+    return structs
 end
 
 -- Takes a table of trigger structs and finds addresses for notable things, such as structs corresponding to entity creation
