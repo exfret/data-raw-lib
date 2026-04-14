@@ -10,6 +10,20 @@ traversal.base_prots = function(base_class)
     return base_prots
 end
 
+traversal.find_prot = function(base_class, name)
+    for class, _ in pairs(defines.prototypes[base_class]) do
+        local prot = data.raw[class][name]
+        if prot ~= nil then
+            return prot
+        end
+    end
+    error(name .. " is not a prototype of type " .. base_class)
+end
+
+traversal.prots = function(class)
+    return data.raw[class] or {}
+end
+
 -- Useful for when a table property could be nil
 traversal.tablize = function(obj)
     if obj == nil then
@@ -33,10 +47,6 @@ traversal.listify = function(tbl)
         return tbl
     end
     return { tbl }
-end
-
-traversal.prots = function(class)
-    return data.raw[class] or {}
 end
 
 return traversal

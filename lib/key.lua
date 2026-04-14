@@ -27,21 +27,21 @@ end
 
 -- edge_type can be actual edge_type or the actual edge
 -- Unlike key, this is used exclusively for edges
-key.ekey = function(edge_type_or_edge, edge_start, edge_stop)
+key.ekey = function(edge_start_or_edge, edge_stop, edge_desc)
     local edge
-    if edge_start ~= nil then
-        assert(type(edge_type_or_edge) == "string")
-        assert(type(edge_start) == "string")
+    if edge_stop ~= nil then
+        assert(type(edge_start_or_edge) == "string")
         assert(type(edge_stop) == "string")
+        assert(type(edge_desc) == "string")
         edge = {
-            type = edge_type_or_edge,
-            start = edge_start,
+            start = edge_start_or_edge,
             stop = edge_stop,
+            desc = edge_desc,
         }
     else
-        edge = edge_type_or_edge
+        edge = edge_start_or_edge
     end
-    return edge.type .. "[" .. edge.start .. edge_separator .. edge.stop .. "]"
+    return (edge.desc or "") .. "[" .. edge.start .. edge_separator .. edge.stop .. "]"
 end
 
 return key
