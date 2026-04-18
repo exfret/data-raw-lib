@@ -1,19 +1,37 @@
 local mtm = {}
 
--- Set tbl[rel[1]][rel[2]]...[rel[#rel]] = true while ensuring all tables exist
-mtm.insert = function(tbl, rel, ind)
+-- Access tbl[rel[1]][rel[2]]...[rel[#rel]]
+mtm.access = function(tbl, rel, extra, ind)
+    extra = extra or {}
+    local mode = extra.mode or "read"
+    local val = extra.val or true
+    local safe = extra.safe or true
+    
     ind = ind or 1
-    assert(type(ind) == "number")
     assert(type(tbl) == "table")
     assert(type(rel) == "table")
+    assert(type(ind) == "number")
+    assert(mode == "read" or mode == "write")
 
     if ind == #rel then
-        tbl[rel[ind]] = true
-        return
+        if mode == "write" then
+            tbl[rel[ind]] = val
+        end
+        return tbl[rel[ind]]
     end
 
-    tbl[rel[ind]] = tbl[rel[ind]] or {}
-    mtm.insert(tbl[rel[ind]], rel, ind + 1)
+    if safe then
+        tbl[rel[ind]] = tbl[rel[ind]] or {}
+    end
+    mtm.access(tbl[rel[ind]], rel, extra, ind + 1)
+end
+
+mtm.insert = function(tbl, rel, val)
+    return mtm.access(tbl, rel, { mode = "write", val = val })
+end
+
+mtm.read = function(tbl, rel)
+    return mtm.access(tbl, rel, { safe = false })
 end
 
 return mtm
