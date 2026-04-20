@@ -12,7 +12,7 @@ end
 
 traversal.find_prot = function(base_class, name)
     for class, _ in pairs(defines.prototypes[base_class]) do
-        local prot = data.raw[class][name]
+        local prot = traversal.prots(class)[name]
         if prot ~= nil then
             return prot
         end
