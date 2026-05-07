@@ -1,7 +1,7 @@
 local node_key_separator = ": "
-local concat_separators = {"__", "_2_"}
 -- Note that edges are formatted with more than just a separator
 local edge_separator = " --> "
+local concat_separators = {"__", "_2_"}
 
 local key = {}
 
@@ -32,7 +32,7 @@ key.ekey = function(edge_start_or_edge, edge_stop, edge_desc)
     if edge_stop ~= nil then
         assert(type(edge_start_or_edge) == "string")
         assert(type(edge_stop) == "string")
-        assert(type(edge_desc) == "string")
+        assert(type(edge_desc) == "string" or edge_desc == nil)
         edge = {
             start = edge_start_or_edge,
             stop = edge_stop,
@@ -42,6 +42,19 @@ key.ekey = function(edge_start_or_edge, edge_stop, edge_desc)
         edge = edge_start_or_edge
     end
     return (edge.desc or "") .. "[" .. edge.start .. edge_separator .. edge.stop .. "]"
+end
+
+-- Turn a list of strings into a string
+key.concat = function(key_tbl, sep_level)
+    -- Sometimes, we need a second unique separator for "concatenations over concatenations"
+    sep_to_use = concat_separators[sep_level or 1]
+
+    local compound_key = ""
+    for _, key in pairs(key_tbl) do
+        compound_key = compound_key .. sep_to_use .. tostring(key)
+    end
+    
+    return string.sub(compound_key, 1 + #sep_to_use, -1)
 end
 
 return key

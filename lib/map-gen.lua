@@ -3,6 +3,7 @@ local map_gen = {}
 -- Gets all prototypes of a type that appear on a planet via autoplace, or checks if a single prototype is there
 -- If to_check is "tile" or "entity", returns a table of all matching prototypes in the room
 -- If to_check is a prototype table, returns true/false for whether it appears in the room
+-- For entities, doesn't check for the existence of a tile where the entity can actually be placed
 map_gen.check_on_planet = function(planet_name, to_check)
     local base_prots = DataRawLib.traversal.base_prots
     local find_prot = DataRawLib.traversal.find_prot

@@ -1,5 +1,6 @@
 DataRawLib = {}
 
+DataRawLib.cat_sigs = require("lib.cat-sigs")
 DataRawLib.categories = require("lib.categories")
 DataRawLib.duplicate = require("lib.duplicate")
 DataRawLib.extract = require("lib.extract")
@@ -10,5 +11,6 @@ DataRawLib.mtm = require("lib.mtm")
 DataRawLib.patching = require("lib.patching")
 DataRawLib.pipe_conns = require("lib.pipe-conns")
 DataRawLib.resize = require("lib.resize")
+DataRawLib.room = require("lib.room")
 DataRawLib.traversal = require("lib.traversal")
 DataRawLib.trigger = require("lib.trigger")

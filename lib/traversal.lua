@@ -11,7 +11,12 @@ traversal.base_prots = function(base_class)
 end
 
 traversal.find_prot = function(base_class, name)
-    for class, _ in pairs(defines.prototypes[base_class]) do
+    local base_classes = defines.prototypes[base_class]
+    if base_classes == nil then
+        error(base_class .. " is not a base class name.")
+    end
+
+    for class, _ in pairs(base_classes) do
         local prot = traversal.prots(class)[name]
         if prot ~= nil then
             return prot
