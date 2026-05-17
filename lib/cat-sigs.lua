@@ -15,4 +15,29 @@ cat_sigs.fcat_name = function(fuel_category, burnt_inventory_size)
     return concat({fuel_category, tostring(accepts_burnt)})
 end
 
+-- Only used for resource entities
+cat_sigs.mcat_name = function(entity)
+    -- If not minable, return the empty mcat
+    if entity.minable == nil then
+        return ""
+    end
+
+    local input_fluids = 0
+    if entity.minable.required_fluid ~= nil then
+        input_fluids = 1
+    end
+    local output_fluids = 0
+    if entity.minable.results ~= nil then
+        for _, result in pairs(entity.minable.results) do
+            if result.type == "fluid" then
+                -- There can be at most one output fluid for a mining result
+                output_fluids = 1
+                break
+            end
+        end
+    end
+
+    return concat({entity.category or "basic-category", tostring(input_fluids), tostring(output_fluids)})
+end
+
 return cat_sigs

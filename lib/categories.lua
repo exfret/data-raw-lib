@@ -95,4 +95,34 @@ categories.units = {
     ["unit"] = true,
 }
 
+-- It's easier to write down which entities don't have health
+categories.without_health = {
+    ["arrow"] = true,
+    ["artillery-flare"] = true,
+    ["artillery-projectile"] = true,
+    ["beam"] = true,
+    ["character-corpse"] = true,
+    ["cliff"] = true,
+    ["corpse"] = true,
+    ["rail-remnants"] = true,
+    ["deconstructible-tile-proxy"] = true,
+    ["entity-ghost"] = true,
+    ["explosion"] = true,
+    ["fire"] = true,
+    ["stream"] = true,
+    ["highlight-box"] = true,
+    ["item-entity"] = true,
+    ["item-request-proxy"] = true,
+    ["lightning"] = true,
+    ["particle-source"] = true,
+    ["projectile"] = true,
+    ["resource"] = true,
+    ["rocket-silo-rocket"] = true,
+    ["rocket-silo-rocket-shadow"] = true,
+    ["smoke-with-trigger"] = true,
+    ["speech-bubble"] = true,
+    ["sticker"] = true,
+    ["tile-ghost"] = true,
+}
+
 return categories
